@@ -1,0 +1,25 @@
+# Gamepad Mouse Configuration
+
+polling_hz = 120
+mouse_speed = 15.0
+scroll_speed = 5.0
+
+# deadzone: Scaled radial threshold (0.0–1.0). Values below this magnitude are ignored.
+# 0.10 is recommended for most controllers; increase if you see cursor drift at rest.
+deadzone = 0.10
+
+invert_scroll_y = false
+
+[mapping]
+# Use physical positions: button_bottom, button_right, button_left, button_top, r1, l1, l3, dpad_up, dpad_down, dpad_left, dpad_right
+click_left = "button_bottom"
+click_right = "button_left"
+delete_word = "button_right"
+toggle_app = "button_start"
+app_switch_forward = "r1"
+app_switch_backward = "l1"
+arrow_up = "dpad_up"
+arrow_down = "dpad_down"
+arrow_left = "dpad_left"
+arrow_right = "dpad_right"
+enter_key = "l3"

@@ -1,0 +1,232 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { Image } from "astro:assets";
+import controllerImg from "../assets/controller.png";
+
+const installCommand = "brew install --cask gamepad-mouse";
+
+const configToml = `# Gamepad Mouse Configuration
+
+polling_hz = 120
+mouse_speed = 15.0
+scroll_speed = 5.0
+
+deadzone = 0.10
+invert_scroll_y = false
+
+[mapping]
+click_left = "button_bottom"
+click_right = "button_left"
+delete_word = "button_right"
+toggle_app = "button_start"
+app_switch_forward = "r1"
+app_switch_backward = "l1"
+arrow_up = "dpad_up"
+arrow_down = "dpad_down"
+arrow_left = "dpad_left"
+arrow_right = "dpad_right"
+enter_key = "l3"`;
+---
+
+<Layout title="Gamepad Mouse — Control Your Mac With a Gamepad">
+  <!-- Hero Section -->
+  <header class="pt-32 pb-24 px-8 relative overflow-hidden bg-surface-bright flex flex-col items-center text-center border-b border-surface-container-low">
+    <div class="max-w-4xl mx-auto relative z-10">
+      <h1 class="text-6xl md:text-8xl font-headline font-extrabold tracking-tighter text-on-surface mb-6 leading-none">
+        Gamepad Mouse
+      </h1>
+      <p class="text-xl md:text-2xl font-body text-on-surface-variant max-w-2xl mx-auto mb-12 font-light">
+        Control your Mac with a gamepad. A lightweight, native macOS menu bar utility.
+      </p>
+
+      <!-- Hero Terminal -->
+      <div class="bg-inverse-surface rounded-lg max-w-2xl mx-auto text-left shadow-[0px_24px_48px_rgba(45,52,53,0.15)] ring-1 ring-white/10 relative -mb-16 z-20">
+        <div class="flex items-center justify-between px-4 py-3 border-b border-white/[0.06]">
+          <div class="flex items-center gap-2">
+            <div class="w-3 h-3 rounded-full bg-[#ff5f57]"></div>
+            <div class="w-3 h-3 rounded-full bg-[#febc2e]"></div>
+            <div class="w-3 h-3 rounded-full bg-[#28c840]"></div>
+          </div>
+          <span class="text-xs font-mono text-on-surface-variant/40 tracking-wide">bash</span>
+          <button class="flex items-center gap-1 text-on-surface-variant/40 hover:text-inverse-on-surface transition-colors cursor-pointer p-1 rounded hover:bg-white/[0.08]" title="Copy to clipboard" id="hero-copy-btn">
+            <span class="material-symbols-outlined text-base">content_copy</span>
+          </button>
+        </div>
+        <div class="px-6 py-5">
+          <code class="font-mono text-base leading-relaxed break-all block">
+            <span class="text-tertiary-fixed select-none">$ </span><span class="text-[#8b9cf7]">brew</span> <span class="text-on-surface-variant/70">install --cask</span> <span class="text-inverse-on-surface">gamepad-mouse</span>
+          </code>
+        </div>
+      </div>
+    </div>
+
+    <!-- Grid background -->
+    <div
+      class="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-6xl h-full pointer-events-none opacity-[0.03]"
+      style="background-image: linear-gradient(#2d3435 1px, transparent 1px), linear-gradient(90deg, #2d3435 1px, transparent 1px); background-size: 64px 64px;"
+    >
+    </div>
+  </header>
+
+  <!-- Features Section -->
+  <section class="py-32 px-8 bg-surface-container-low mt-16" id="features">
+    <div class="max-w-7xl mx-auto">
+      <h2 class="text-3xl md:text-4xl font-headline font-bold mb-16 text-center text-on-surface tracking-tight">
+        Core Capabilities
+      </h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <!-- Feature 1 -->
+        <div class="bg-surface-container-lowest p-8 border border-surface-container-highest transition-colors hover:border-outline-variant/30 group">
+          <div class="w-12 h-12 bg-surface-container flex items-center justify-center rounded mb-6 text-on-surface group-hover:bg-primary group-hover:text-on-primary transition-colors">
+            <span class="material-symbols-outlined">gamepad</span>
+          </div>
+          <h3 class="text-xl font-headline font-bold mb-3 text-on-surface">Gamepad Control</h3>
+          <p class="font-body text-on-surface-variant leading-relaxed">
+            Left joystick moves the cursor with a scaled radial deadzone for drift-free, precise movement. Supports multi-monitor setups with DPI normalization.
+          </p>
+        </div>
+        <!-- Feature 2 -->
+        <div class="bg-surface-container-lowest p-8 border border-surface-container-highest transition-colors hover:border-outline-variant/30 group">
+          <div class="w-12 h-12 bg-surface-container flex items-center justify-center rounded mb-6 text-on-surface group-hover:bg-primary group-hover:text-on-primary transition-colors">
+            <span class="material-symbols-outlined">swipe</span>
+          </div>
+          <h3 class="text-xl font-headline font-bold mb-3 text-on-surface">Smooth Scrolling</h3>
+          <p class="font-body text-on-surface-variant leading-relaxed">
+            Right joystick delivers trackpad-smooth continuous scrolling with configurable speed and natural scroll direction support.
+          </p>
+        </div>
+        <!-- Feature 3 -->
+        <div class="bg-surface-container-lowest p-8 border border-surface-container-highest transition-colors hover:border-outline-variant/30 group">
+          <div class="w-12 h-12 bg-surface-container flex items-center justify-center rounded mb-6 text-on-surface group-hover:bg-primary group-hover:text-on-primary transition-colors">
+            <span class="material-symbols-outlined">webhook</span>
+          </div>
+          <h3 class="text-xl font-headline font-bold mb-3 text-on-surface">Menu Bar Native</h3>
+          <p class="font-body text-on-surface-variant leading-relaxed">
+            Lives quietly in your menu bar with zero-friction setup. No terminal windows, no dock icon. Auto-detects your controller on connect.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Controller Layout Section -->
+  <section class="py-32 px-8 bg-white" id="controller-map">
+    <div class="max-w-5xl mx-auto text-center">
+      <h2 class="text-3xl md:text-4xl font-headline font-bold mb-6 text-on-surface tracking-tight">
+        Default Controls
+      </h2>
+      <p class="font-body text-lg text-on-surface-variant mb-12 max-w-2xl mx-auto">
+        Every button is mapped out of the box. Fully customizable via config.
+      </p>
+      <Image
+        src={controllerImg}
+        alt="Xbox controller showing default Gamepad Mouse button mappings"
+        class="w-full max-w-4xl mx-auto rounded-lg"
+      />
+    </div>
+  </section>
+
+  <!-- Usage Section -->
+  <section class="py-32 px-8 bg-surface-container-low" id="usage">
+    <div class="max-w-7xl mx-auto flex flex-col lg:flex-row gap-16 items-center">
+      <div class="w-full lg:w-1/2">
+        <h2 class="text-3xl md:text-4xl font-headline font-bold mb-6 text-on-surface tracking-tight">How It Works</h2>
+        <p class="font-body text-lg text-on-surface-variant mb-8 leading-relaxed">
+          Launch the app, connect your controller, and start using your Mac from the couch. It just works.
+        </p>
+        <div class="space-y-4">
+          <div class="flex items-start gap-3">
+            <span class="material-symbols-outlined text-tertiary mt-1">check_circle</span>
+            <p class="font-body text-on-surface-variant">Launch Gamepad Mouse — it appears in your menu bar instantly</p>
+          </div>
+          <div class="flex items-start gap-3">
+            <span class="material-symbols-outlined text-tertiary mt-1">check_circle</span>
+            <p class="font-body text-on-surface-variant">Connect any supported gamepad via Bluetooth or USB</p>
+          </div>
+          <div class="flex items-start gap-3">
+            <span class="material-symbols-outlined text-tertiary mt-1">check_circle</span>
+            <p class="font-body text-on-surface-variant">Left stick moves the cursor, right stick scrolls smoothly</p>
+          </div>
+          <div class="flex items-start gap-3">
+            <span class="material-symbols-outlined text-tertiary mt-1">check_circle</span>
+            <p class="font-body text-on-surface-variant">Press Start to toggle input on/off without quitting</p>
+          </div>
+          <div class="flex items-start gap-3">
+            <span class="material-symbols-outlined text-tertiary mt-1">check_circle</span>
+            <p class="font-body text-on-surface-variant">D-pad acts as arrow keys, LB/RB switch apps, left stick press is Enter</p>
+          </div>
+          <div class="flex items-start gap-3">
+            <span class="material-symbols-outlined text-tertiary mt-1">check_circle</span>
+            <p class="font-body text-on-surface-variant">Full drag-and-drop support — hold a button and move</p>
+          </div>
+        </div>
+      </div>
+      <div class="w-full lg:w-1/2">
+        <div class="bg-inverse-surface rounded-lg p-6 text-left shadow-[0px_24px_48px_rgba(45,52,53,0.06)] ring-1 ring-white/10 w-full">
+          <div class="flex items-center justify-between mb-4 border-b border-surface-variant/20 pb-2">
+            <span class="text-xs font-mono text-on-surface-variant uppercase tracking-widest">How to use</span>
+          </div>
+          <div class="font-mono text-sm space-y-4">
+            <div>
+              <span class="text-on-surface-variant opacity-70"># 1. Launch the app</span><br />
+              <span class="text-tertiary-fixed">$</span> <span class="text-inverse-on-surface">open Gamepad\ Mouse.app</span>
+            </div>
+            <div>
+              <span class="text-on-surface-variant opacity-70"># 2. Connect your controller via Bluetooth or USB</span><br />
+              <span class="text-on-surface-variant opacity-70"># The menu bar icon updates automatically</span>
+            </div>
+            <div>
+              <span class="text-on-surface-variant opacity-70"># 3. Control your Mac!</span><br />
+              <span class="text-on-surface-variant opacity-70"># Left stick  → cursor movement</span><br />
+              <span class="text-on-surface-variant opacity-70"># Right stick → smooth scrolling</span><br />
+              <span class="text-on-surface-variant opacity-70"># A button    → left click</span><br />
+              <span class="text-on-surface-variant opacity-70"># X button    → right click</span><br />
+              <span class="text-on-surface-variant opacity-70"># B button    → delete word (R2+B → delete line)</span><br />
+              <span class="text-on-surface-variant opacity-70"># Start       → toggle on/off</span><br />
+              <span class="text-on-surface-variant opacity-70"># RB          → switch to next app (Cmd+Tab)</span><br />
+              <span class="text-on-surface-variant opacity-70"># LB          → switch to previous app (Cmd+Shift+Tab)</span><br />
+              <span class="text-on-surface-variant opacity-70"># D-pad       → arrow keys</span><br />
+              <span class="text-on-surface-variant opacity-70"># L3 (stick press) → Enter</span>
+            </div>
+            <div>
+              <span class="text-on-surface-variant opacity-70"># 4. Customize settings</span><br />
+              <span class="text-tertiary-fixed">$</span> <span class="text-inverse-on-surface">open ~/.config/gamepad-mouse/config.toml</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Configuration Section -->
+  <section class="py-32 px-8 bg-surface-container-low" id="configuration">
+    <div class="max-w-4xl mx-auto text-center">
+      <h2 class="text-3xl md:text-4xl font-headline font-bold mb-6 text-on-surface tracking-tight">
+        Simple Configuration
+      </h2>
+      <p class="font-body text-lg text-on-surface-variant mb-12">
+        Edit <code class="font-mono text-sm bg-surface-container-high px-2 py-1 rounded">~/.config/gamepad-mouse/config.toml</code> — changes apply instantly.
+      </p>
+      <div class="bg-surface-container-low p-8 border border-outline-variant/15 text-left inline-block w-full max-w-2xl">
+        <pre class="font-mono text-sm text-on-surface overflow-x-auto"><code set:html={configToml} /></pre>
+      </div>
+      <p class="font-body text-sm text-on-surface-variant mt-8 max-w-2xl mx-auto">
+        No complex UI. Just a clean, human-readable TOML file. If something breaks, use "Reset Configuration" from the menu bar to restore defaults.
+      </p>
+    </div>
+  </section>
+
+  <!-- Copy Button Script -->
+  <script>
+    document.getElementById("hero-copy-btn")?.addEventListener("click", async (e) => {
+      const btn = e.currentTarget as HTMLElement;
+      const code = "brew install --cask gamepad-mouse";
+      await navigator.clipboard.writeText(code);
+      const icon = btn.querySelector(".material-symbols-outlined");
+      if (icon) {
+        icon.textContent = "check";
+        setTimeout(() => { icon.textContent = "content_copy"; }, 2000);
+      }
+    });
+  </script>
+</Layout>

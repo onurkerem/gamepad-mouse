@@ -1,0 +1,19 @@
+{
+  "name": "website",
+  "version": "1.0.0",
+  "description": "Marketing website for Gamepad Mouse.",
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "check": "astro check"
+  },
+  "dependencies": {
+    "@astrojs/check": "^0.9.9",
+    "@tailwindcss/vite": "^4.2.2",
+    "astro": "^5.18.0",
+    "tailwindcss": "^4.1.18",
+    "typescript": "^6.0.2"
+  }
+}
